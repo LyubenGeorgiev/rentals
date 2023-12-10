@@ -1,6 +1,7 @@
 package db
 
 import (
+	"database/sql"
 	"net/url"
 	"strconv"
 	"strings"
@@ -16,9 +17,9 @@ type PostgresStorage struct {
 	DB *goqu.Database
 }
 
-func NewPostgresStore(db *goqu.Database) *PostgresStorage {
+func NewPostgresStorage(db *sql.DB) *PostgresStorage {
 	return &PostgresStorage{
-		DB: db,
+		DB: goqu.New("postgres", db),
 	}
 }
 

@@ -22,9 +22,11 @@ func NewRentalsHandler(storage db.Storage) *RentalsHandler {
 }
 
 func (rh *RentalsHandler) GetRentalByID(w http.ResponseWriter, r *http.Request) {
+	// Get the rental id
 	vars := mux.Vars(r)
 	rentalIDStr := vars["id"]
 
+	// Convert the rental id to int
 	rentalID, err := strconv.Atoi(rentalIDStr)
 	if err != nil {
 		http.Error(w, "Invalid rental ID", http.StatusBadRequest)
@@ -42,7 +44,7 @@ func (rh *RentalsHandler) GetRentalByID(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	// Convert the rental struct
+	// Convert to rental response
 	rentalResponse := convertDBResponseToRentalResponse(dbResponse)
 
 	// Marshal the rental struct to JSON
@@ -58,7 +60,33 @@ func (rh *RentalsHandler) GetRentalByID(w http.ResponseWriter, r *http.Request) 
 }
 
 func (rh *RentalsHandler) GetRentalByQuery(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Query"))
+	// Fetch rental data using query
+	dbResponses, err := rh.Storage.FetchRentalByQuery(r.URL.Query())
+	if err != nil {
+		if err == db.ErrNotFound {
+			http.Error(w, err.Error(), http.StatusNotFound)
+		} else {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
+	}
+
+	// Convert to rental responses
+	rentalResponses := []*models.RentalResponse{}
+	for _, dbResponse := range dbResponses {
+		rentalResponses = append(rentalResponses, convertDBResponseToRentalResponse(&dbResponse))
+	}
+
+	// Marshal the rentals to JSON
+	response, err := json.Marshal(rentalResponses)
+	if err != nil {
+		http.Error(w, "Failed to marshal JSON", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(response)
 }
 
 func convertDBResponseToRentalResponse(r *dbmodels.UserAndRental) *models.RentalResponse {

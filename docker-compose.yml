@@ -2,6 +2,7 @@ version: '3.6'
 services:
   app:
     build: .
+    image: app-image
     ports:
       - "8080:8080"
     depends_on:
@@ -12,6 +13,7 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=testingwithrentals
+    command: ["./main"]
 
   postgres:
     image: mdillon/postgis:11
@@ -24,3 +26,10 @@ services:
       - "5434:5432"
     volumes:
       - ./sql-init.sql:/docker-entrypoint-initdb.d/sql-init.sql
+
+  tests:
+    image: app-image
+    depends_on:
+      - app
+    command: ["go", "test", "-v", "./..."]
+    

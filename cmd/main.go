@@ -63,11 +63,13 @@ func main() {
 	// Handle route for /rentals with optional query parameters
 	router.HandleFunc("/rentals", handler.GetRentalByQuery).Methods("GET")
 
+	// Create server
 	server := &http.Server{
 		Addr:    ":8080",
 		Handler: router,
 	}
 
+	// Listen and serve
 	fmt.Println("Server listening on port 8080...")
 	if err = server.ListenAndServe(); err != nil {
 		log.Fatal("Server error:", err)

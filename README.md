@@ -28,12 +28,18 @@ To run this application locally, Docker and Docker Compose must be installed on 
 3. Start the application using Docker Compose:
 
     ```bash
-    docker compose up
+    docker compose up --build app
     ```
 
 4. Once the containers are running, the Go application will be available at `http://localhost:8080`.
 
 5. Access the application in your web browser or use API client tools to interact with the application endpoints.
+
+## Run the tests
+
+```bash
+    docker compose up --build tests
+```
 
 ## Endpoints
 

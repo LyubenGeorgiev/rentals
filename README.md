@@ -40,7 +40,7 @@ To run this application locally, Docker and Docker Compose must be installed on 
 
 Optionally add ```--build``` flag if you have changed the code.
 ```bash
-    docker compose up tests
+docker compose up tests
 ```
 
 ## Endpoints

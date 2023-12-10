@@ -27,6 +27,7 @@ To run this application locally, Docker and Docker Compose must be installed on 
 
 3. Start the application using Docker Compose:
 
+    Optionally add ```--build``` flag if you have changed the code.
     ```bash
     docker compose up --build app
     ```
@@ -37,8 +38,9 @@ To run this application locally, Docker and Docker Compose must be installed on 
 
 ## Run the tests
 
+Optionally add ```--build``` flag if you have changed the code.
 ```bash
-    docker compose up --build tests
+    docker compose up tests
 ```
 
 ## Endpoints

@@ -1,10 +1,10 @@
 package models
 
-type price struct {
+type Price struct {
 	Day int64 `json:"day"`
 }
 
-type location struct {
+type Location struct {
 	City    string  `json:"city"`
 	State   string  `json:"state"`
 	Zip     string  `json:"zip"`
@@ -13,7 +13,7 @@ type location struct {
 	Lng     float32 `json:"lng"`
 }
 
-type user struct {
+type User struct {
 	ID        int    `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
@@ -30,7 +30,7 @@ type RentalResponse struct {
 	Length          float64  `json:"length"`
 	Sleeps          int      `json:"sleeps"`
 	PrimaryImageURL string   `json:"primary_image_url"`
-	Price           price    `json:"price"`
-	Location        location `json:"location"`
-	User            user     `json:"user"`
+	Price           Price    `json:"price"`
+	Location        Location `json:"location"`
+	User            User     `json:"user"`
 }

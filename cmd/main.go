@@ -42,6 +42,7 @@ func main() {
 	}
 	defer database.Close()
 
+	// Ping the database
 	err = database.Ping()
 	if err != nil {
 		log.Fatal("Could not ping the database:", err)
